@@ -25,6 +25,7 @@ import cz.jirutka.spring.embedmongo.EmbeddedMongoBuilder;
 @EnableAutoConfiguration
 @ConfigurationProperties(prefix = "environments.dev.database")
 @EnableMongoRepositories(basePackages = "com.gurps.cmdsocial.persistence")
+
 public class Application {
 
 	private String ip;
@@ -70,4 +71,6 @@ public class Application {
 		MongoTemplate mongoTemplate = new MongoTemplate(mongoDbFactory());
 		return mongoTemplate;
 	}
+	
+	
 }
