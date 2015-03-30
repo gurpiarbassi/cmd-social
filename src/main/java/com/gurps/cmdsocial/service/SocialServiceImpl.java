@@ -57,7 +57,7 @@ public class SocialServiceImpl implements SocialService {
 		User user = getUser(username);
 		user.setUsername(username);
 
-		Set<String> subscribers = user.getSubscribers();
+		Set<String> subscribers = user.getSubscriptions();
 		subscribers.add(userToFollow); // we are assuming the user to follow
 										// already exists as per requirement!
 		userRepository.save(user);
@@ -66,7 +66,7 @@ public class SocialServiceImpl implements SocialService {
 	@Override
 	public Collection<Post> showWall(final String user) {
 		LOGGER.debug("showing wall of user " + user);
-		return null;
+		return userRepository.showWall(user);
 	}
 
 	private User getUser(final String username) {

@@ -27,5 +27,5 @@ public class User {
 //	private Collection<Post> posts = new ArrayList<>(); //TODO think about splitting this out into its seperate collection since it can grow a lot!
 //	
 	@Field("subs")
-	private Set<String> subscribers = new HashSet<>();
+	private Set<String> subscriptions = new HashSet<>();
 }
