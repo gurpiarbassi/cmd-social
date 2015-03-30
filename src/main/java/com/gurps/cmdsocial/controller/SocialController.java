@@ -3,6 +3,7 @@ package com.gurps.cmdsocial.controller;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Collection;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Controller;
 
-import com.gurps.cmdsocial.model.User;
+import com.gurps.cmdsocial.model.Post;
 import com.gurps.cmdsocial.service.SocialService;
 @Controller
 public class SocialController implements CommandLineRunner{
@@ -58,9 +59,9 @@ public class SocialController implements CommandLineRunner{
 		}
 		else if(command.matches(READ_REGEX)){
 			LOGGER.debug("opting to read users timeline");
-			User user = socialService.read(tokens[0]);
+			Collection<Post> posts = socialService.read(tokens[0]);
 			
-			LOGGER.debug("Timeline retrieved = " + user);
+			LOGGER.debug("Timeline retrieved = " + posts);
 		}
 	}
 	

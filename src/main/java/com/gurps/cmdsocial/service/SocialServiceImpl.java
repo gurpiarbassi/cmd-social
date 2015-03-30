@@ -1,9 +1,7 @@
 package com.gurps.cmdsocial.service;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.Collection;
-import java.util.Date;
+import java.util.Collections;
 import java.util.Set;
 
 import org.slf4j.Logger;
@@ -13,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import com.gurps.cmdsocial.model.Post;
 import com.gurps.cmdsocial.model.User;
+import com.gurps.cmdsocial.persistence.PostRepository;
 import com.gurps.cmdsocial.persistence.UserRepository;
 
 @Component
@@ -20,6 +19,8 @@ public class SocialServiceImpl implements SocialService {
 
 	@Autowired
 	private UserRepository userRepository;
+	@Autowired
+	private PostRepository postRepository;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(SocialServiceImpl.class);
 
@@ -28,25 +29,26 @@ public class SocialServiceImpl implements SocialService {
 		LOGGER.debug("creating post for user " + username + " with message " + message);
 
 		User user = getUser(username);
-
+		user.setUsername(username);
+		User persistedUser = userRepository.save(user); //TODO do we really want to save before checking whether this is a new object?
+		
 		Post post = new Post();
 		post.setMessage(message);
-		Date now = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
-		post.setCreationDateTime(now);
+		post.setUserId(persistedUser.getId());
+		postRepository.save(post);
 
-		Collection<Post> posts = user.getPosts();
-		posts.add(post);
-
-		user.setUsername(username);
-		user.setPosts(posts);
-		userRepository.save(user);
-
+		//TODO look into txn mgmt using two phase commit for mongo since mongo txns only atomic at document level.
 	}
 
 	@Override
-	public User read(final String user) {
-		LOGGER.debug("reading timeline for user " + user);
-		return userRepository.findByUsername(user);
+	public Collection<Post> read(final String username) {
+		LOGGER.debug("reading timeline for user " + username);
+		User user = getUser(username);
+		if(user.getId() != null){
+			return postRepository.findByUserId(user.getId()); //TODO username or object id
+		}
+		return Collections.<Post>emptyList();
+		
 	}
 
 	@Override
@@ -62,13 +64,13 @@ public class SocialServiceImpl implements SocialService {
 	}
 
 	@Override
-	public Collection<Post> showWall(String user) {
+	public Collection<Post> showWall(final String user) {
 		LOGGER.debug("showing wall of user " + user);
 		return null;
 	}
 
 	private User getUser(final String username) {
-		User user = this.read(username);
+		User user = userRepository.findByUsername(username);
 		if (user == null) {
 			user = new User();
 		}
