@@ -1,4 +1,4 @@
-package com.gurps.cmdsocial.domain;
+package com.gurps.cmdsocial.model;
 
 import java.util.Date;
 
@@ -13,10 +13,16 @@ import org.springframework.data.mongodb.core.mapping.Field;
  *
  */
 public class Post {
-
+	
 	@Field("msg")
 	private String message;
 	
 	@Field("created")
 	private Date creationDateTime; //Mongodb doesnt seem to support Java 8 dates. Could create custom convertors but we'll go with the legacy Date for now :( 
+	
+	public long getAgeInMillis(){
+		//TODO need to calculate age in millis of post
+		//Instant.now().minus(creationDateTime.toInstant().);
+		return 1L;
+	}
 }

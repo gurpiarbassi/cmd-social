@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Controller;
 
-import com.gurps.cmdsocial.domain.Timeline;
+import com.gurps.cmdsocial.model.User;
 import com.gurps.cmdsocial.service.SocialService;
 @Controller
 public class SocialController implements CommandLineRunner{
@@ -40,7 +40,7 @@ public class SocialController implements CommandLineRunner{
 	}
 	
 	protected void processCommand(final String command){
-		final String[] tokens = command.split(" ");
+		 String[] tokens = command.split(" ");
 		
 		if(command.matches(WALL_REGEX)){
 			LOGGER.debug("opting to view users wall");
@@ -53,13 +53,14 @@ public class SocialController implements CommandLineRunner{
 		}
 		else if(command.matches(POST_REGEX)){
 			LOGGER.debug("opting to post");
-			socialService.post(tokens[0], tokens[2]);
+			tokens = command.split("\\s{1}->\\s{1}");
+			socialService.post(tokens[0], tokens[1]);
 		}
 		else if(command.matches(READ_REGEX)){
 			LOGGER.debug("opting to read users timeline");
-			Timeline timeline = socialService.read(tokens[0]);
+			User user = socialService.read(tokens[0]);
 			
-			LOGGER.debug("Timeline retrieved = " + timeline);
+			LOGGER.debug("Timeline retrieved = " + user);
 		}
 	}
 	
