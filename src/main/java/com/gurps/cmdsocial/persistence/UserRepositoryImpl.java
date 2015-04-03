@@ -40,7 +40,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
 		usernames.add(user.getUsername());
 		usernames.addAll(user.getSubscriptions());
 		
-		Query searchPosts = new Query(Criteria.where("userid").in(usernames)).with(new Sort(Sort.Direction.DESC, "id"));
+		Query searchPosts = new Query(Criteria.where("username").in(usernames)).with(new Sort(Sort.Direction.DESC, "id"));
 		Collection<Post> posts = operations.find(searchPosts, Post.class);
 		
 		return posts;

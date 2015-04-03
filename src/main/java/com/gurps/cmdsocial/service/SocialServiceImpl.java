@@ -2,11 +2,13 @@ package com.gurps.cmdsocial.service;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import com.gurps.cmdsocial.model.Post;
@@ -29,13 +31,10 @@ public class SocialServiceImpl implements SocialService {
 		LOGGER.debug("creating post for user " + username + " with message " + message);
 
 		User user = getUser(username);
-		user.setUsername(username);
 		User persistedUser = userRepository.save(user); //TODO do we really want to save before checking whether this is a new object?
 		
 		//TODO look into txn mgmt using two phase commit for mongo since mongo txns only atomic at document level.
-		Post post = new Post();
-		post.setMessage(message);
-		post.setUserId(persistedUser.getUsername());
+		Post post = new Post(persistedUser.getUsername(), message);
 		postRepository.save(post);
 
 		
@@ -46,7 +45,7 @@ public class SocialServiceImpl implements SocialService {
 		LOGGER.debug("reading timeline for user " + username);
 		User user = getUser(username);
 		if(user.getId() != null){
-			return postRepository.findByUserId(username); 
+			return postRepository.findByUserId(username, new Sort(Sort.Direction.DESC, "id")); 
 		}
 		return Collections.<Post>emptyList();
 		
@@ -56,8 +55,6 @@ public class SocialServiceImpl implements SocialService {
 	public void follow(final String username, final String userToFollow) {
 		LOGGER.debug("user " + username + " is subscribing to follow user " + userToFollow);
 		User user = getUser(username);
-		user.setUsername(username);
-
 		Set<String> subscribers = user.getSubscriptions();
 		subscribers.add(userToFollow); // we are assuming the user to follow
 										// already exists as per requirement!
@@ -73,7 +70,7 @@ public class SocialServiceImpl implements SocialService {
 	private User getUser(final String username) {
 		User user = userRepository.findByUsername(username);
 		if (user == null) {
-			user = new User();
+			user = new User(username, new HashSet<String>());
 		}
 		return user;
 	}

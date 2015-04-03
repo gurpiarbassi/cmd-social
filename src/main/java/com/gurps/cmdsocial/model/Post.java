@@ -3,14 +3,13 @@ package com.gurps.cmdsocial.model;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
-import lombok.Data;
-
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-@Data
+
 /**
  * Encapsulates a posting on the timeline.
  * I originally had post as a embedded document on the User document.
@@ -27,14 +26,43 @@ public class Post {
 	@Id
 	private String id;
 	
-	@Field("userid")
+	@Field("username")
 	private String userId;
 	
-	@Field("msg")
+	@Field("message")
 	private String message;
 	
+	public Post(String username, String message){
+		this.userId = username;
+		this.message = message;
+	}
+	
+	@PersistenceConstructor
+	public Post(String id, String userId, String message) {
+		this.id = id;
+		this.userId = userId;
+		this.message = message;
+	}
+	
 	public LocalDateTime getPostDate(){
-		ObjectId objId = new ObjectId(this.getId());
+		ObjectId objId = new ObjectId(this.id);
 		return LocalDateTime.ofInstant(objId.getDate().toInstant(), ZoneId.systemDefault());
 	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+	
 }
