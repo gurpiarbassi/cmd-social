@@ -17,6 +17,11 @@ import com.gurps.cmdsocial.persistence.PostRepository;
 import com.gurps.cmdsocial.persistence.UserRepository;
 
 @Component
+/**
+ * Core service class for social networking operations.
+ * @author gurpiarbassi
+ *
+ */
 public class SocialServiceImpl implements SocialService {
 
 	@Autowired
@@ -27,6 +32,11 @@ public class SocialServiceImpl implements SocialService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(SocialServiceImpl.class);
 
 	@Override
+	/**
+	 * Posts a message to the timeline
+	 * @param username The user whose timeline is being manipulated
+	 * @param message The messag to post to the timeline
+	 */
 	public void post(final String username, final String message) {
 		LOGGER.debug("creating post for user " + username + " with message " + message);
 
@@ -41,6 +51,10 @@ public class SocialServiceImpl implements SocialService {
 	}
 
 	@Override
+	/**
+	 * Finds all the posts by the given user and returns them in reverse chronological order
+	 * @param username The username you wich to query for posts
+	 */
 	public Collection<Post> read(final String username) {
 		LOGGER.debug("reading timeline for user " + username);
 		User user = getUser(username);
@@ -52,6 +66,11 @@ public class SocialServiceImpl implements SocialService {
 	}
 
 	@Override
+	/**
+	 * A user can follow another user
+	 * @param username the current user
+	 * @param userToFollow the userid of the user you wish to follow
+	 */
 	public void follow(final String username, final String userToFollow) {
 		LOGGER.debug("user " + username + " is subscribing to follow user " + userToFollow);
 		User user = getUser(username);
@@ -62,6 +81,11 @@ public class SocialServiceImpl implements SocialService {
 	}
 
 	@Override
+	/**
+	 * Every user has a wall which shows all the posts the user has committed
+	 * and also any posts commmited by their subscriptions
+	 * @param user the userid of the user whose wal you want to see.
+	 */
 	public Collection<Post> showWall(final String user) {
 		LOGGER.debug("showing wall of user " + user);
 		return userRepository.showWall(getUser(user));
