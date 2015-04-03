@@ -63,9 +63,8 @@ public class SocialController implements CommandLineRunner{
 		if(command.matches(WALL_REGEX)){
 			LOGGER.debug("opting to view users wall");
 			Collection<Post> wall = socialService.showWall(tokens[0]);
-			for(Post post : wall){
-				System.out.println(postFormatter.formatPost(post, true));
-			}
+			wall.forEach(post -> System.out.println(postFormatter.formatPost(post, true)));
+			
 			
 		}
 		else if(command.matches(FOLLOW_REGEX)){
@@ -83,9 +82,7 @@ public class SocialController implements CommandLineRunner{
 			Collection<Post> posts = socialService.read(tokens[0]);
 			
 			LOGGER.debug("Timeline retrieved = " + posts);
-			for(Post post : posts){
-				System.out.println(postFormatter.formatPost(post, false));
-			}
+			posts.forEach(post -> System.out.println(postFormatter.formatPost(post, false)));
 		}
 	}	
 }
