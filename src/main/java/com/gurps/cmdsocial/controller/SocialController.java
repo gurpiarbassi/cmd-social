@@ -8,12 +8,20 @@ import java.util.Collection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Controller;
 
 import com.gurps.cmdsocial.model.Post;
 import com.gurps.cmdsocial.service.SocialService;
+import com.gurps.cmdsocial.ui.formatter.PostFormatter;
 @Controller
+/**
+ * Command line controller class used to consume user input
+ * and route the request to the appropriate service call.
+ * @author gurpiarbassi
+ *
+ */
 public class SocialController implements CommandLineRunner{
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(SocialController.class);
@@ -25,8 +33,13 @@ public class SocialController implements CommandLineRunner{
 	@Autowired
 	private SocialService socialService;
 	
+	@Autowired
+	@Qualifier(value="basicFormatter")
+	private PostFormatter postFormatter;
+	
 	@Override
 	public void run(String... arg0) throws Exception {
+		LOGGER.info("Welcome to cmd-social. Please enter command below");
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
 		while(true){
@@ -40,12 +53,20 @@ public class SocialController implements CommandLineRunner{
 		
 	}
 	
+	/**
+	 * Processes the input command by making the appropriate service call.
+	 * @param command String expression for the input command
+	 */
 	protected void processCommand(final String command){
 		 String[] tokens = command.split(" ");
 		
 		if(command.matches(WALL_REGEX)){
 			LOGGER.debug("opting to view users wall");
-			socialService.showWall(tokens[0]);
+			Collection<Post> wall = socialService.showWall(tokens[0]);
+			for(Post post : wall){
+				System.out.println(postFormatter.formatPost(post, true));
+			}
+			
 		}
 		else if(command.matches(FOLLOW_REGEX)){
 			LOGGER.debug("opting follow user");
@@ -62,7 +83,9 @@ public class SocialController implements CommandLineRunner{
 			Collection<Post> posts = socialService.read(tokens[0]);
 			
 			LOGGER.debug("Timeline retrieved = " + posts);
+			for(Post post : posts){
+				System.out.println(postFormatter.formatPost(post, false));
+			}
 		}
-	}
-	
+	}	
 }

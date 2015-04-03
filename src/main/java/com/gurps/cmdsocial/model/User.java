@@ -23,9 +23,6 @@ public class User {
 	@Indexed(unique = true, sparse = true)
 	private String username;	
 	
-//	@Field("posts")
-//	private Collection<Post> posts = new ArrayList<>(); //TODO think about splitting this out into its seperate collection since it can grow a lot!
-//	
 	@Field("subs")
 	private Set<String> subscriptions = new HashSet<>();
 }

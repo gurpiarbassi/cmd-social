@@ -1,13 +1,24 @@
 package com.gurps.cmdsocial.persistence;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.util.Assert;
 
 import com.gurps.cmdsocial.model.Post;
+import com.gurps.cmdsocial.model.User;
 
+/**
+ * Custom persistence implementation in addition to that offered by Spring repositories.
+ * @author gurpiarbassi
+ *
+ */
 public class UserRepositoryImpl implements UserRepositoryCustom {
 
 	private final MongoOperations operations;
@@ -20,12 +31,19 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
 	}
 
 	@Override
-	public Collection<Post> showWall(String username) {
-		// get all posts for this user along with the posts of all the people
-		// he/she is following and return them
-		// in chronological order
-		// need username, message and time it was posted relative to now
-		return null;
+	/**
+	 * Find all the posts for this user and all the user he/she is following
+	 * The collection of results is returned back in reverse chronological order
+	 */
+	public Collection<Post> showWall(final User user) {
+		List<String> usernames = new ArrayList<>();
+		usernames.add(user.getUsername());
+		usernames.addAll(user.getSubscriptions());
+		
+		Query searchPosts = new Query(Criteria.where("userid").in(usernames)).with(new Sort(Sort.Direction.DESC, "id"));
+		Collection<Post> posts = operations.find(searchPosts, Post.class);
+		
+		return posts;
 	}
 
 }

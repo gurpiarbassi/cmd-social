@@ -32,12 +32,13 @@ public class SocialServiceImpl implements SocialService {
 		user.setUsername(username);
 		User persistedUser = userRepository.save(user); //TODO do we really want to save before checking whether this is a new object?
 		
+		//TODO look into txn mgmt using two phase commit for mongo since mongo txns only atomic at document level.
 		Post post = new Post();
 		post.setMessage(message);
-		post.setUserId(persistedUser.getId());
+		post.setUserId(persistedUser.getUsername());
 		postRepository.save(post);
 
-		//TODO look into txn mgmt using two phase commit for mongo since mongo txns only atomic at document level.
+		
 	}
 
 	@Override
@@ -45,7 +46,7 @@ public class SocialServiceImpl implements SocialService {
 		LOGGER.debug("reading timeline for user " + username);
 		User user = getUser(username);
 		if(user.getId() != null){
-			return postRepository.findByUserId(user.getId()); //TODO username or object id
+			return postRepository.findByUserId(username); 
 		}
 		return Collections.<Post>emptyList();
 		
@@ -66,7 +67,7 @@ public class SocialServiceImpl implements SocialService {
 	@Override
 	public Collection<Post> showWall(final String user) {
 		LOGGER.debug("showing wall of user " + user);
-		return userRepository.showWall(user);
+		return userRepository.showWall(getUser(user));
 	}
 
 	private User getUser(final String username) {

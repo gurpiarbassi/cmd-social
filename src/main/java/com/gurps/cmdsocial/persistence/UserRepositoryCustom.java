@@ -3,6 +3,7 @@ package com.gurps.cmdsocial.persistence;
 import java.util.Collection;
 
 import com.gurps.cmdsocial.model.Post;
+import com.gurps.cmdsocial.model.User;
 
 /**
  * Custom functionality other than that provided by sprint repositories
@@ -11,5 +12,5 @@ import com.gurps.cmdsocial.model.Post;
  */
 public interface UserRepositoryCustom {
 
-	Collection<Post> showWall(String username);
+	Collection<Post> showWall(User user);
 }
