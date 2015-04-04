@@ -10,11 +10,11 @@ import com.gurps.cmdsocial.model.Post;
 public interface SocialService {
 
 	void post(String user, String message);
-	
+
 	Collection<Post> read(String user);
-	
+
 	void follow(String user, String userToFollow);
-	
+
 	Collection<Post> showWall(String user);
-	
+
 }

@@ -23,8 +23,9 @@ public class PostFormatterImpl implements PostFormatter {
 	}
 
 	/**
-	 * Every post has a age in brackets when it is output. So we calculate this based on the
-	 * insertion date/time of the post and the current date/time.
+	 * Every post has a age in brackets when it is output. So we calculate this
+	 * based on the insertion date/time of the post and the current date/time.
+	 * 
 	 * @param postDateTime
 	 * @return A String to display as the age component of the post.
 	 */

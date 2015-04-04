@@ -7,6 +7,7 @@ import com.gurps.cmdsocial.model.User;
 
 /**
  * Custom functionality other than that provided by sprint repositories
+ * 
  * @author gurpiarbassi
  *
  */

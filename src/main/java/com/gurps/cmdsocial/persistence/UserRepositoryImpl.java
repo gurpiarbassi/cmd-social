@@ -15,7 +15,9 @@ import com.gurps.cmdsocial.model.Post;
 import com.gurps.cmdsocial.model.User;
 
 /**
- * Custom persistence implementation in addition to that offered by Spring repositories.
+ * Custom persistence implementation in addition to that offered by Spring
+ * repositories.
+ * 
  * @author gurpiarbassi
  *
  */
@@ -39,10 +41,11 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
 		List<String> usernames = new ArrayList<>();
 		usernames.add(user.getUsername());
 		usernames.addAll(user.getSubscriptions());
-		
-		Query searchPosts = new Query(Criteria.where("username").in(usernames)).with(new Sort(Sort.Direction.DESC, "id"));
+
+		Query searchPosts = new Query(Criteria.where("username").in(usernames)).with(new Sort(
+				Sort.Direction.DESC, "id"));
 		Collection<Post> posts = mongoTemplate.find(searchPosts, Post.class);
-		
+
 		return posts;
 	}
 

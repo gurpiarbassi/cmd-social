@@ -11,7 +11,7 @@ import com.gurps.cmdsocial.model.User;
  * @author gurpiarbassi
  *
  */
-public interface UserRepository extends MongoRepository<User, String>,  UserRepositoryCustom{
-	
+public interface UserRepository extends MongoRepository<User, String>, UserRepositoryCustom {
+
 	User findByUsername(String username);
 }

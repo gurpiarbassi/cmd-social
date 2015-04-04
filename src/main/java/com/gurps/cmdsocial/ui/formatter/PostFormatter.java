@@ -4,6 +4,7 @@ import com.gurps.cmdsocial.model.Post;
 
 /**
  * Responsible for formating posts for output display
+ * 
  * @author gurpiarbassi
  *
  */

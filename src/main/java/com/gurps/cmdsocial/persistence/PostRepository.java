@@ -10,8 +10,8 @@ import org.springframework.stereotype.Repository;
 import com.gurps.cmdsocial.model.Post;
 
 @Repository
-public interface PostRepository extends MongoRepository<Post, String>{
-	
-   @Query("{ username:?0 }")
-   Collection<Post> findByUserId(String userId, Sort sort);
+public interface PostRepository extends MongoRepository<Post, String> {
+
+	@Query("{ username:?0 }")
+	Collection<Post> findByUserId(String userId, Sort sort);
 }

@@ -10,31 +10,31 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-@Document(collection="user")
+@Document(collection = "user")
 public class User {
 
 	@Id
 	private String id;
-	
+
 	@NotBlank
 	@Field("username")
 	@Indexed(unique = true, sparse = true)
-	private String username;	
-	
+	private String username;
+
 	@Field("subscriptions")
 	private Set<String> subscriptions = new HashSet<>();
-	
-	public User(String username, Set<String> subscriptions){
+
+	public User(String username, Set<String> subscriptions) {
 		this.username = username;
 		this.subscriptions = subscriptions;
 	}
-	
+
 	@PersistenceConstructor
 	public User(String id, String username, Set<String> subscriptions) {
-	    this.id = id;
+		this.id = id;
 		this.username = username;
 		this.subscriptions = subscriptions;
-	  }
+	}
 
 	public String getId() {
 		return id;
@@ -47,5 +47,5 @@ public class User {
 	public Set<String> getSubscriptions() {
 		return subscriptions;
 	}
-	
+
 }

@@ -27,18 +27,16 @@ import cz.jirutka.spring.embedmongo.EmbeddedMongoBuilder;
 @EnableAutoConfiguration
 @EnableConfigurationProperties
 @Configuration
-@ConfigurationProperties(locations="classpath:application.yml", prefix = "environments.dev.database")
+@ConfigurationProperties(locations = "classpath:application.yml", prefix = "environments.dev.database")
 @EnableMongoRepositories(basePackages = "com.gurps.cmdsocial.persistence")
-
 public class Application {
 
 	private String ip;
-	
+
 	private int port;
-	
+
 	private String name;
-	
-	
+
 	private MongoDbFactory mongoDbFactory;
 
 	public int getPort() {
@@ -56,36 +54,33 @@ public class Application {
 	public String getIp() {
 		return this.ip;
 	}
-	
-	public String getName(){
+
+	public String getName() {
 		return this.name;
 	}
-	
-	public void setName(String name){
+
+	public void setName(String name) {
 		this.name = name;
 	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}
-	
+
 	@Bean(destroyMethod = "destroy")
 	public MongoDbFactory mongoDbFactory() throws Exception {
-		if(mongoDbFactory == null){
-			Mongo mongo = new EmbeddedMongoBuilder()
-	        .version("2.4.5")
-	        .bindIp(getIp())
-	        .port(getPort())
-	        .build();
+		if (mongoDbFactory == null) {
+			Mongo mongo = new EmbeddedMongoBuilder().version("2.4.5").bindIp(getIp())
+					.port(getPort()).build();
 			mongoDbFactory = new SimpleMongoDbFactory(mongo, getName());
 		}
 		return mongoDbFactory;
 	}
-	
+
 	@Bean
 	@DependsOn("mongoDbFactory")
-    public MongoTemplate mongoTemplate() throws Exception {
-        return new MongoTemplate(this.mongoDbFactory);
-    }
-	
+	public MongoTemplate mongoTemplate() throws Exception {
+		return new MongoTemplate(this.mongoDbFactory);
+	}
+
 }
