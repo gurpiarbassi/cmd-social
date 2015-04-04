@@ -83,6 +83,8 @@ public class SocialController implements CommandLineRunner{
 			
 			LOGGER.debug("Timeline retrieved = " + posts);
 			posts.forEach(post -> System.out.println(postFormatter.formatPost(post, false)));
+		}else{
+			LOGGER.warn("Please enter a valid command!");
 		}
 	}	
 }
