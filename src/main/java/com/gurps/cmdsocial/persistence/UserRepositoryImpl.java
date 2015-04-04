@@ -21,13 +21,13 @@ import com.gurps.cmdsocial.model.User;
  */
 public class UserRepositoryImpl implements UserRepositoryCustom {
 
-	private final MongoOperations operations;
+	private final MongoOperations mongoTemplate;
 
 	@Autowired
-	public UserRepositoryImpl(MongoOperations operations) {
+	public UserRepositoryImpl(MongoOperations mongoTemplate) {
 
-		Assert.notNull(operations, "MongoOperations not supplied");
-		this.operations = operations;
+		Assert.notNull(mongoTemplate, "mongoTemplate not supplied");
+		this.mongoTemplate = mongoTemplate;
 	}
 
 	@Override
@@ -41,7 +41,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
 		usernames.addAll(user.getSubscriptions());
 		
 		Query searchPosts = new Query(Criteria.where("username").in(usernames)).with(new Sort(Sort.Direction.DESC, "id"));
-		Collection<Post> posts = operations.find(searchPosts, Post.class);
+		Collection<Post> posts = mongoTemplate.find(searchPosts, Post.class);
 		
 		return posts;
 	}
