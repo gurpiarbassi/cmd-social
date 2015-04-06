@@ -16,7 +16,7 @@ public class PostFormatterImpl implements PostFormatter {
 	public String formatPost(final Post post, final boolean isUserAware) {
 		StringBuilder builder = new StringBuilder();
 		if (isUserAware) {
-			builder.append(post.getUserId() + " - " + " ");
+			builder.append(post.getUserId() + " - ");
 		}
 		builder.append(post.getMessage() + " " + getAge(post.getPostDate()));
 		return builder.toString();
@@ -44,7 +44,7 @@ public class PostFormatterImpl implements PostFormatter {
 		if (yearsBetween > 0) {
 			formattedElapsedValue = "(" + String.valueOf(yearsBetween) + " years ago)";
 		} else if (monthsBetween > 0) {
-			formattedElapsedValue = "(" + String.valueOf(monthsBetween) + "months ago)";
+			formattedElapsedValue = "(" + String.valueOf(monthsBetween) + " months ago)";
 		} else if (daysBetween > 0) {
 			formattedElapsedValue = "(" + String.valueOf(daysBetween) + " days ago)";
 		} else {
