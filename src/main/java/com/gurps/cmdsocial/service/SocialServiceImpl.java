@@ -78,15 +78,15 @@ public class SocialServiceImpl implements SocialService {
 		LOGGER.debug("user " + username + " is subscribing to follow user " + userToFollow);
 		User user = getUser(username);
 		Set<String> subscribers = user.getSubscriptions();
-		subscribers.add(userToFollow); // we are assuming the user to follow
-										// already exists as per requirement!
+		subscribers.add(userToFollow); 
+		// we are assuming the user to follow already exists as per requirement!
 		userRepository.save(user);
 	}
 
 	@Override
 	/**
 	 * Every user has a wall which shows all the posts the user has committed
-	 * and also any posts commmited by their subscriptions
+	 * and also any posts commited by their subscriptions
 	 * @param user the userid of the user whose wal you want to see.
 	 */
 	public Collection<Post> showWall(final String user) {

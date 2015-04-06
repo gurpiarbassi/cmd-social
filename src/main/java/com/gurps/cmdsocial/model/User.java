@@ -10,6 +10,11 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+/**
+ * Encapsulates a user entity
+ * @author gurpiarbassi
+ *
+ */
 @Document(collection = "user")
 public class User {
 

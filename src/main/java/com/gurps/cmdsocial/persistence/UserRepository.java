@@ -13,5 +13,10 @@ import com.gurps.cmdsocial.model.User;
  */
 public interface UserRepository extends MongoRepository<User, String>, UserRepositoryCustom {
 
+	/**
+	 * finds by username on the User entity
+	 * @param username
+	 * @return User with the given username
+	 */
 	User findByUsername(String username);
 }

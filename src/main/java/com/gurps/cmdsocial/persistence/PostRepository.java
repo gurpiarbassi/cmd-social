@@ -12,6 +12,13 @@ import com.gurps.cmdsocial.model.Post;
 @Repository
 public interface PostRepository extends MongoRepository<Post, String> {
 
+	
+	/**
+	 * 
+	 * @param userId the username to seach for
+	 * @param sort the sort order
+	 * @return Collection of Posts belonging to the given user
+	 */
 	@Query("{ username:?0 }")
 	Collection<Post> findByUserId(String userId, Sort sort);
 }
