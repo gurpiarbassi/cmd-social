@@ -1,5 +1,5 @@
 # cmd-social
-Command line social networking demo
+Command line social networking demo using embedded mongoDB
 
 Built using Maven 3.3.1
 
