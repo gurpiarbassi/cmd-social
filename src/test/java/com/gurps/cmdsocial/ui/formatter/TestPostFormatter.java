@@ -1,12 +1,11 @@
 package com.gurps.cmdsocial.ui.formatter;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.ZoneId;
-import java.time.temporal.TemporalUnit;
 import java.util.Date;
 
 import org.bson.types.ObjectId;
@@ -15,14 +14,13 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import com.gurps.cmdsocial.TestApplicationContext;
+import com.gurps.cmdsocial.MockApplicationContext;
 import com.gurps.cmdsocial.model.Post;
 import com.gurps.cmdsocial.service.SocialService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = TestApplicationContext.class)
+@ContextConfiguration(classes = MockApplicationContext.class)
 public class TestPostFormatter {
 
 	@Autowired

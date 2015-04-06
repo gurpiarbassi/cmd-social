@@ -12,11 +12,11 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.gurps.cmdsocial.TestApplicationContext;
+import com.gurps.cmdsocial.MockApplicationContext;
 import com.gurps.cmdsocial.model.User;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = TestApplicationContext.class)
+@ContextConfiguration(classes = MockApplicationContext.class)
 public class TestUserRepository {
 
 	@Autowired

@@ -1,6 +1,6 @@
 package com.gurps.cmdsocial.persistence;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -12,12 +12,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.gurps.cmdsocial.TestApplicationContext;
+import com.gurps.cmdsocial.MockApplicationContext;
 import com.gurps.cmdsocial.model.Post;
-import com.gurps.cmdsocial.service.SocialService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = TestApplicationContext.class)
+@ContextConfiguration(classes = MockApplicationContext.class)
 public class TestPostRepository {
 
 	@Autowired
