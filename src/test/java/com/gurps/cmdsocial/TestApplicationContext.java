@@ -29,7 +29,7 @@ import cz.jirutka.spring.embedmongo.EmbeddedMongoBuilder;
 @Configuration
 @ConfigurationProperties(locations = "classpath:application.yml", prefix = "environments.dev.database")
 @EnableMongoRepositories(basePackages = "com.gurps.cmdsocial.persistence")
-public class Application {
+public class TestApplicationContext {
 
 	private String ip;
 
@@ -64,7 +64,7 @@ public class Application {
 	}
 
 	public static void main(String[] args) {
-		SpringApplication.run(TestApplicationContext.class, args);
+		SpringApplication.run(Application.class, args);
 	}
 
 	@Bean(destroyMethod = "destroy")
