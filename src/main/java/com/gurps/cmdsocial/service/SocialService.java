@@ -9,7 +9,7 @@ import com.gurps.cmdsocial.model.Post;
 @Service
 public interface SocialService {
 
-	void post(String user, String message);
+	Post post(String user, String message);
 
 	Collection<Post> read(String user);
 
