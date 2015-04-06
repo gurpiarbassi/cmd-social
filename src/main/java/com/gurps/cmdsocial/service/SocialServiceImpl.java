@@ -36,8 +36,9 @@ public class SocialServiceImpl implements SocialService {
 	 * Posts a message to the timeline
 	 * @param username The user whose timeline is being manipulated
 	 * @param message The messag to post to the timeline
+	 * @return the saved Post instance
 	 */
-	public void post(final String username, final String message) {
+	public Post post(final String username, final String message) {
 		LOGGER.debug("creating post for user " + username + " with message " + message);
 
 		User user = getUser(username);
@@ -47,16 +48,16 @@ public class SocialServiceImpl implements SocialService {
 														// is a new object?
 
 		// TODO look into txn mgmt using two phase commit for mongo since mongo
-		// txns only atomic at document level.
+		// txns are only atomic at document level.
 		Post post = new Post(persistedUser.getUsername(), message);
-		postRepository.save(post);
+		return postRepository.save(post);
 
 	}
 
 	@Override
 	/**
 	 * Finds all the posts by the given user and returns them in reverse chronological order
-	 * @param username The username you wich to query for posts
+	 * @param username The username you which to query for posts
 	 */
 	public Collection<Post> read(final String username) {
 		LOGGER.debug("reading timeline for user " + username);
