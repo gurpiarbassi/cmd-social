@@ -29,7 +29,7 @@ import cz.jirutka.spring.embedmongo.EmbeddedMongoBuilder;
 @Configuration
 @ConfigurationProperties(locations = "classpath:application.yml", prefix = "environments.dev.database")
 @EnableMongoRepositories(basePackages = "com.gurps.cmdsocial.persistence")
-public class Application {
+public final class Application {
 
 	private String ip;
 
