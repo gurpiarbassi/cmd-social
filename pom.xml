@@ -42,10 +42,7 @@
 			<artifactId>spring-data-mongodb</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-validator</artifactId>
-		</dependency>
+		
 	</dependencies>
 
 	<build>

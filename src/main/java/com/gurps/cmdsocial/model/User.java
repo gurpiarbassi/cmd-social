@@ -3,7 +3,6 @@ package com.gurps.cmdsocial.model;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -21,7 +20,7 @@ public class User {
 	@Id
 	private String id;
 
-	@NotBlank
+	
 	@Field("username")
 	@Indexed(unique = true, sparse = true)
 	private String username;
